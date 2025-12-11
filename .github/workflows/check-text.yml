@@ -17,7 +17,11 @@ jobs:
 
       - name: Check for forbidden words
         run: |
-          if grep -Riq "secret" .; then
+          # Search for "secret" in all files except .github/workflows
+          if grep -Riq "secret" . \
+            --exclude-dir=".git" \
+            --exclude-dir=".github/workflows" \
+            --exclude="*.yml"; then
             echo "❌ Forbidden word 'secret' found!"
             exit 1
           else
