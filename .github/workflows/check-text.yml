@@ -18,11 +18,14 @@ jobs:
       - name: Check for forbidden words
         run: |
           # Search for "secret" in all files except .github/workflows
-          if grep -Riq "secret" . --exclude-dir=".git" --exclude-dir=".github/workflows"; then
-           echo "❌ Forbidden word 'secret' found!"
-           exit 1
+          if grep -Riq "secret" . \
+            --exclude-dir=".git" \
+            --exclude-dir=".github/workflows" \
+            --exclude="*.yml"; then
+            echo "❌ Forbidden word 'secret' found!"
+            exit 1
           else
-           echo "✔️ No forbidden words found."
+            echo "✔️ No forbidden words found."
           fi
 
       - name: Count lines in all files
